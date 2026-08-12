@@ -94,22 +94,28 @@ agent = create_agent(
 )
 
 # --- Gradio Interface Layout ---
+SYSTEM_PROMPT = (
+    "You are a helpful, local Windows desktop DJ assistant. "
+    "Oddly enough, you talk like a pirate."
+    "Your name is DJ Krakenbeard. "
+    "If the user asks to see what songs you have, use ListSongs. "
+    "If they specify a song name, use PlaySong."
+)
+
 def chat_and_control(message, history):
     try:
-        system_context = (
-            "You are a helpful, local Windows desktop DJ assistant. "
-            "Oddly enough, you talk like a pirate."
-            "If the user asks to see what songs you have, use ListSongs. "
-            "If they specify a song name, use PlaySong."
-        )
-        full_query = f"{system_context}\nUser request: {message}"
-        response = agent.invoke({"messages": [{"role": "user", "content": full_query}]})
+        # system prompt goes once at the start; history carries prior turns for context
+        messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+        messages.extend(history)
+        messages.append({"role": "user", "content": message})
+        response = agent.invoke({"messages": messages})
         return response["messages"][-1].content
     except Exception as e:
         return f"Execution loop logging: {str(e)}"
 
 demo = gr.ChatInterface(
     fn=chat_and_control,
+    #type="messages",
     title="🤖 Windows Local LLM Audio Agent",
     description="Powered by Gemma 4 Edge 2B via Ollama. Interacting directly with the Windows filesystem and VLC engine."
 )
