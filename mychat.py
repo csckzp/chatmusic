@@ -116,7 +116,7 @@ def chat_and_control(message, history):
 demo = gr.ChatInterface(
     fn=chat_and_control,
     #type="messages",
-    title="🤖 Windows Local LLM Audio Agent",
+    title="🤖 Local LLM Audio Agent",
     description="Powered by Gemma 4 Edge 2B via Ollama. Interacting directly with the Windows filesystem and VLC engine."
 )
 
