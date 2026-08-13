@@ -56,6 +56,7 @@ def pause_or_resume(action: str = "pause") -> str:
 
 def stop_music(dummy: str = "") -> str:
     """Completely stops the music playback and resets the track."""
+    print("Stopping music playback and resetting the track.")
     player.stop()
     return "Music stopped completely."
 
