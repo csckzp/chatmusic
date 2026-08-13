@@ -90,7 +90,7 @@ llm = ChatOllama(model="gemma4:e2b", temperature=0.0)
 agent = create_agent(
     model=llm,
     tools=windows_music_tools,
-    debug=True
+    #debug=True
 )
 
 # --- Gradio Interface Layout ---
